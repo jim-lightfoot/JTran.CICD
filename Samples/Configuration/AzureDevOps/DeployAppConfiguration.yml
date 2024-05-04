@@ -8,7 +8,7 @@ resources:
     - repository: jtran_cicd 
       type:       github 
       name:       'jim-lightfoot/JTran-CICD'
-      endpoint:   https://github.com/jim-lightfoot/JTran-CICD
+      endpoint:   'jim-lightfoot-JTran-CICD'
       ref:        'refs/heads/feature/config-deploy'
 
 stages:
