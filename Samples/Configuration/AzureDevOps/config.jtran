@@ -1,0 +1,24 @@
+[
+  // The array must contain two objects. The first is just keyvault references
+  {
+    // This must be here
+    "#outputvariable(FileName)":        "#($DestinationPath + 'keyvault.json')",
+
+    "#variable(KeyvaultReference)":     "#('https://kv-jtran-cicd-' + $environment + '.vault.azure.net/secrets/')",
+
+    "CustomerDatabaseConnectionString": "#($KeyvaultReference + 'CustomerDatabaseConnectionString')"
+  },
+
+  // The second object contains all non-keyvault entries
+  {
+    // This must be here
+    "#outputvariable(FileName)":        "#($DestinationPath + 'nonkeyvault.json')",
+
+    "#variable(ApiBaseAddress)":        "#('https://app-jtran-cicd-' + $environment + '.fictionalcompany.com/')",
+
+    "InvoiceUrl":                       "#(ApiBaseAddress + 'invoices')",
+    "InventoryUrl":                     "#(ApiBaseAddress + 'inventory')",
+
+    "CosmosConnectionString":           "#('mongodb://mycompany.', $environment, '.cosmos')"
+  }
+]

@@ -1,0 +1,30 @@
+name: Sample App Configuration Pipeline
+
+trigger: none
+pr: none
+
+resources:
+  repositories:
+    - repository: jtran_cicd 
+      type:       github 
+      name:       'jim-lightfoot/JTran.CICD'
+      endpoint:   https://github.com/jim-lightfoot/JTran.CICD
+      ref:        'refs/heads/feature/config-deploy'
+
+stages:
+
+  - stage:       Dev_Deploy_Config
+    displayName: 'Dev: Deploy Config'
+    pool:
+      vmImage:   windows-latest
+    jobs:
+      - deployment: Deploy_Config_${{ variables.Env }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: Deployment/Configuration/AzureDevOps/DeployAppConfiguration.yml@jtran_cicd
+                  parameters:
+                    ServiceConnection:          spn-jtran-cicd-dev
+                    AppConfigurationEndpoint:   'https://appcs-jtran-cicd-dev.azconfig.io'
+                    ProjectFile:                $(Build.SourcesDirectory)/Deployment/Configuration/deployconfigProject.json
